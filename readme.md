@@ -12,7 +12,7 @@ This will start the server on http://localhost:8000.
 Endpoints
 The following endpoints are available:
 
-**GET /products**
+1. **GET /products**
 The list_products endpoint is a GET endpoint that returns a list of all available products in the e-commerce application. The endpoint is defined using the @app.get decorator from the FastAPI framework, which maps the endpoint to the /products URL.
 
 The function first checks if the products are already cached in memory. If the products are cached, the function retrieves the products from the cache. If the products are not cached, the function retrieves the products from the database using the find() method of the db.products collection.
@@ -27,7 +27,7 @@ The function then creates a success message with the number of products found, a
 
 If there was an error while fetching the products, the function returns an error message with the details of the error. This ensures that clients receive informative error messages if there are any issues with the API.
 
-**POST /orders**
+2. **POST /orders**
 The create_order endpoint is a POST endpoint that allows users to create a new order in the e-commerce application. The endpoint is defined using the @app.post decorator from the FastAPI framework, which maps the endpoint to the /orders URL.
 
 The function takes an OrderCreate object as input, which is defined in the models module and represents the data required to create a new order. The OrderCreate object includes fields such as the user ID, product ID, and quantity.
@@ -44,7 +44,7 @@ The function then creates a success message with the ID of the newly created ord
 
 If there was an error while creating the order or updating the product quantity, the function returns an error message with the details of the error. This ensures that clients receive informative error messages if there are any issues with the API.
 
-**GET /orders**
+3. **GET /orders**
 The get_orders endpoint is a GET endpoint that returns a list of all orders in the e-commerce application. The endpoint is defined using the @app.get decorator from the FastAPI framework, which maps the endpoint to the /orders URL.
 
 The function takes two optional query parameters: skip and limit. These parameters are used to implement pagination, allowing clients to retrieve a subset of the orders at a time. The skip parameter specifies the number of orders to skip, and the limit parameter specifies the maximum number of orders to return.
@@ -59,7 +59,7 @@ If there was an error while fetching the orders, the function returns an error m
 
 By providing pagination support and converting the orders to a list of Order objects, this function enables clients to easily retrieve and process orders in the e-commerce application. The use of the FastAPI framework and the JSONResponse class also helps to ensure that the API is fast, reliable, and easy to use.
 
-**GET /orders/{order_id}**
+4. **GET /orders/{order_id}**
 The fetch_order endpoint is a GET endpoint that retrieves a single order by ID. The endpoint is defined using the @app.get decorator from the FastAPI framework, which maps the endpoint to the /orders/{order_id} URL.
 
 The function takes an order_id parameter as input, which is the ID of the order to retrieve. The order_id parameter is specified in the URL path using the {order_id} syntax.
@@ -76,7 +76,7 @@ If there was an error while fetching the order, the function returns an error me
 
 By providing a way to retrieve a single order by ID, this function enables clients to easily retrieve and process orders in the e-commerce application. The use of the FastAPI framework and the JSONResponse class also helps to ensure that the API is fast, reliable, and easy to use.
 
-**PUT /products/{product_id}**
+5. **PUT /products/{product_id}**
 The update_product_quantity endpoint is a PUT endpoint that allows users to update the quantity of a product in the e-commerce application. The endpoint is defined using the @app.put decorator from the FastAPI framework, which maps the endpoint to the /products/{product_id}/quantity URL.
 
 The function takes two parameters as input: product_id and quantity. The product_id parameter is the ID of the product to update, and the quantity parameter is the new quantity of the product.
@@ -91,10 +91,6 @@ If there was an error while updating the product quantity, the function returns 
 
 By providing a way to update the quantity of a product, this function enables clients to easily manage the inventory of the e-commerce application. The use of the FastAPI framework and the JSONResponse class also helps to ensure that the API is fast, reliable, and easy to use.
 
-Documentation
-
-
-Please go through the comments in the code. Due to time constraints, it was not possible to add a separate documentation.
 
 Key optimizations:
 1. indexing on _id of product and _id of orders happens automatically which leads to fast retrieval.
