@@ -12,7 +12,8 @@ app = FastAPI()
 # Seed dummy products into the database
 seed_dummy_products()
 
-# Declare a global variable to cache products
+# Declare a global variable to cache all the products
+#since there are only few products we can cache all of them
 productsCache = {}
 
 # Endpoint to list all available products
@@ -48,23 +49,13 @@ def create_order(order: Order):
         # Start a transaction to create the order
         with db.client.start_session() as session:
             with session.start_transaction():
-                productsNotInCache = []
-                # Check if all the products are available in cache, else fetch them from the database
-                for item in order.items:
-                    # Fetch product from cache
-                    product = productsCache.get(str(item.product_id))
-                    # If product is not in cache, fetch it from the database
-                    if not product:
-                        productsNotInCache.append(item.product_id)
-                    
-                
-                # If there are products not in cache, fetch them from the database
-                if productsNotInCache:
+                # Check if products are already cached
+                if not productsCache:
                     # Fetch products from database
-                    productCursor = db.products.find({"_id": {"$in": productsNotInCache}})
+                    productCursor = db.products.find()
                     # Raise exception if no products are found
-                    if(productCursor.count() != len(productsNotInCache)):
-                        raise HTTPException(status_code=404, detail="products not found")
+                    if(productCursor.count() == 0):
+                        raise HTTPException(status_code=404, detail="No products found")
                     # Convert products to list of Product objects
                     products = [Product(**product) for product in productCursor]
                     # Create a dictionary that maps product IDs to products
