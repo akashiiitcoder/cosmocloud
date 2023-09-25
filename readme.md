@@ -29,7 +29,7 @@ This endpoint allows users to update the available quantity of a product.
 
 Documentation
 
-Please go through the comments in the code. Duw to time ontsraint it was not possible to add a separate documentation.
+Please go through the comments in the code. Due to time constraints, it was not possible to add a separate documentation.
 
 Key optimizations:
 1. indexing on _id of product and _id of orders happen automatically which leads to fast retrieval.
